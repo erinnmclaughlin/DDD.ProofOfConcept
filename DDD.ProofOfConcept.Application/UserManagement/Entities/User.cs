@@ -2,7 +2,7 @@
 
 namespace DDD.ProofOfConcept.Application.UserManagement.Entities
 {
-    public class User : DomainObject
+    public class User : DomainObject, IAggregateRoot
     {
         public string Username { get; private set; } = null!;
 

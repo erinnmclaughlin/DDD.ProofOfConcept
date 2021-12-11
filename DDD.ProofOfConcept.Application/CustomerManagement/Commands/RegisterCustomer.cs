@@ -1,5 +1,6 @@
-﻿using DDD.ProofOfConcept.Application.CustomerManagement.Entities;
-using DDD.ProofOfConcept.Application.Services;
+﻿using DDD.ProofOfConcept.Application.Common;
+using DDD.ProofOfConcept.Application.CustomerManagement.Entities;
+using DDD.ProofOfConcept.Application.CustomerManagement.Repositories;
 using DDD.ProofOfConcept.Domain.CustomerManagement.ValueObjects;
 using FluentValidation;
 using MediatR;
@@ -23,10 +24,10 @@ namespace DDD.ProofOfConcept.Application.CustomerManagement.Commands
 
         public class Handler : IRequestHandler<Command, CustomerDetail>
         {
-            private readonly IRepository<CustomerDetail> _customerRepo;
+            private readonly ICustomerRepository _customerRepo;
             private readonly ICurrentUserService _currentUserService;
 
-            public Handler(IRepository<CustomerDetail> customerRepo, ICurrentUserService currentUserService)
+            public Handler(ICustomerRepository customerRepo, ICurrentUserService currentUserService)
             {
                 _customerRepo = customerRepo;
                 _currentUserService = currentUserService;
@@ -43,8 +44,8 @@ namespace DDD.ProofOfConcept.Application.CustomerManagement.Commands
                 var location = new Location(request.City, request.Region, request.Country);
                 var customer = new CustomerDetail(request.CompanyName!, location);
 
-                // Record event in audit trail
-                customer.Record(new CustomerAuditItem("New customer registered.", _currentUserService.User!.Id));
+                // Record registration event in audit trail
+                customer.Record(new CustomerRegistered(customer, _currentUserService.User!.Id));
 
                 // Save
                 await _customerRepo.AddAsync(customer, cancellationToken);

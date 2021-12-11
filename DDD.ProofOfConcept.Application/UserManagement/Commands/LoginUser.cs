@@ -1,5 +1,6 @@
-﻿using DDD.ProofOfConcept.Application.Services;
+﻿using DDD.ProofOfConcept.Application.Common;
 using DDD.ProofOfConcept.Application.UserManagement.Entities;
+using DDD.ProofOfConcept.Application.UserManagement.Repositories;
 using DDD.ProofOfConcept.Application.UserManagement.Specifications;
 using FluentValidation;
 using MediatR;
@@ -21,9 +22,9 @@ namespace DDD.ProofOfConcept.Application.UserManagement.Commands
         public class Handler : IRequestHandler<Command, User>
         {
             private readonly ICurrentUserService _currentUserService;
-            private readonly IRepository<User> _userRepository;
+            private readonly IUserRepository _userRepository;
 
-            public Handler(ICurrentUserService currentUserService, IRepository<User> userRepository)
+            public Handler(ICurrentUserService currentUserService, IUserRepository userRepository)
             {
                 _currentUserService = currentUserService;
                 _userRepository = userRepository;

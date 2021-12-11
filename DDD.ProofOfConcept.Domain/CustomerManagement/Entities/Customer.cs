@@ -4,7 +4,7 @@ using System;
 
 namespace DDD.ProofOfConcept.Domain.CustomerManagement.Entities
 {
-    public class Customer : DomainObject
+    public class Customer : DomainObject, IAggregateRoot
     {
         public string CompanyName { get; set; } = null!;
         public Location Location { get; set; } = null!;

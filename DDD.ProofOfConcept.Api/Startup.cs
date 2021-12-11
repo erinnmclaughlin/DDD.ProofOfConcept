@@ -1,8 +1,9 @@
-using DDD.ProofOfConcept.Application.Services;
+using DDD.ProofOfConcept.Application.Common;
 using DDD.ProofOfConcept.Infrastructure.DataAccess;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -29,9 +30,9 @@ namespace DDD.ProofOfConcept.Api
             });
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();
-            services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddMediatR(typeof(Startup), typeof(CurrentUserService));
-            services.AddDbContext<AppDbContext>();
+            services.AddDbContext<AppDbContext>(options => options.UseInMemoryDatabase("AppDb"));
+            services.AddRepositories();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

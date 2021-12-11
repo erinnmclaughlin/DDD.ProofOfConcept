@@ -1,6 +1,7 @@
-﻿using DDD.ProofOfConcept.Application.CustomerManagement.Entities;
+﻿using DDD.ProofOfConcept.Application.Common;
+using DDD.ProofOfConcept.Application.CustomerManagement.Entities;
+using DDD.ProofOfConcept.Application.CustomerManagement.Repositories;
 using DDD.ProofOfConcept.Application.CustomerManagement.Specifications;
-using DDD.ProofOfConcept.Application.Services;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,9 @@ namespace DDD.ProofOfConcept.Application.CustomerManagement.Queries
         public class Handler : IRequestHandler<Query, IReadOnlyCollection<CustomerAuditItem>>
         {
             private readonly ICurrentUserService _currentUserService;
-            private readonly IRepository<CustomerDetail> _customerRepository;
+            private readonly ICustomerRepository _customerRepository;
 
-            public Handler(ICurrentUserService currentUserService, IRepository<CustomerDetail> customerRepo)
+            public Handler(ICurrentUserService currentUserService, ICustomerRepository customerRepo)
             {
                 _currentUserService = currentUserService;
                 _customerRepository = customerRepo;

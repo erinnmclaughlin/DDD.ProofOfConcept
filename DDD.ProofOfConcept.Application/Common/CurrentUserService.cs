@@ -1,7 +1,7 @@
 ﻿using DDD.ProofOfConcept.Application.UserManagement.Entities;
 using System;
 
-namespace DDD.ProofOfConcept.Application.Services
+namespace DDD.ProofOfConcept.Application.Common
 {
     public class CurrentUserService : ICurrentUserService
     {

@@ -1,6 +1,6 @@
 ﻿using DDD.ProofOfConcept.Application.UserManagement.Entities;
 
-namespace DDD.ProofOfConcept.Application.Services
+namespace DDD.ProofOfConcept.Application.Common
 {
     public interface ICurrentUserService
     {

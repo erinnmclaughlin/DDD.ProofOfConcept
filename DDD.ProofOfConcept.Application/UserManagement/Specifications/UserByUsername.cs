@@ -1,6 +1,5 @@
 ﻿using Ardalis.Specification;
 using DDD.ProofOfConcept.Application.UserManagement.Entities;
-using System;
 using System.Linq;
 
 namespace DDD.ProofOfConcept.Application.UserManagement.Specifications
@@ -9,7 +8,7 @@ namespace DDD.ProofOfConcept.Application.UserManagement.Specifications
     {
         public UserByUsername(string username)
         {
-            Query.Where(user => user.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
+            Query.Where(user => user.Username.ToUpper() == username.ToUpper());
         }
     }
 }

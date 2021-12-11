@@ -1,5 +1,6 @@
-﻿using DDD.ProofOfConcept.Application.Services;
-using DDD.ProofOfConcept.Domain.CustomerManagement.Entities;
+﻿using DDD.ProofOfConcept.Application.Common;
+using DDD.ProofOfConcept.Application.CustomerManagement.Entities;
+using DDD.ProofOfConcept.Application.CustomerManagement.Repositories;
 using MediatR;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,23 +10,22 @@ namespace DDD.ProofOfConcept.Application.CustomerManagement.Queries
 {
     public class GetAllCustomers
     {
-        public record Query() : IRequest<IList<Customer>>;
+        public record Query() : IRequest<IList<CustomerDetail>>;
 
-        public class Handler : IRequestHandler<Query, IList<Customer>>
+        public class Handler : IRequestHandler<Query, IList<CustomerDetail>>
         {
-            private readonly IRepository<Customer> _customerRepository;
+            private readonly ICustomerRepository _customerRepository;
             private readonly ICurrentUserService _currentUserService;
 
-            public Handler(IRepository<Customer> customerRepository, ICurrentUserService currentUserService)
+            public Handler(ICustomerRepository customerRepository, ICurrentUserService currentUserService)
             {
                 _customerRepository = customerRepository;
                 _currentUserService = currentUserService;
             }
 
-            public async Task<IList<Customer>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<IList<CustomerDetail>> Handle(Query request, CancellationToken cancellationToken)
             {
                 _currentUserService.EnsureLoggedIn();
-
                 return await _customerRepository.ListAsync(cancellationToken);
             }
         }
